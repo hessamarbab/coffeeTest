@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+        return Product::with('option')->with('option.choices')->get();// TODO json resource menu
     }
 
     /**
