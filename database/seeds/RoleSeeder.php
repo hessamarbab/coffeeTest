@@ -15,16 +15,7 @@ class RoleSeeder extends AbstractByDataSeeder
     protected function items(){
         return $this->modelClass()::types;
     }
-      /**
-     * model class
-     *
-     * @return class
-     */
-    protected function modelClass()
-    {
-        return Role::class;
-    }
-       /**
+     /**
      *  gave data structure
      *
      * @param array $item

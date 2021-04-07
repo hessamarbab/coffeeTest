@@ -18,15 +18,6 @@ class OptionSeeder extends AbstractByDataSeeder
         ];
     }
     /**
-     * model class
-     *
-     * @return class
-     */
- /*   protected function modelClass()
-    {
-        return Option::class;
-    }*/
-    /**
      *  gave data structure
      *
      * @param array $item
