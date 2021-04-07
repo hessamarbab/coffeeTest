@@ -1,7 +1,6 @@
 <?php
 
 use App\Role;
-use Abstracts\AbstractByDataSeeder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 
@@ -24,5 +23,16 @@ class RoleSeeder extends AbstractByDataSeeder
     protected function modelClass()
     {
         return Role::class;
+    }
+       /**
+     *  gave data structure
+     *
+     * @param array $item
+     * @param integer $counterId
+     * @return array
+     */
+    protected function format($item,$counterId)
+    {
+        return ['id'=>$counterId,'type'=>$item];
     }
 }

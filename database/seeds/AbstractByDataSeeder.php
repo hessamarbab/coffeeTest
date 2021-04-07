@@ -1,5 +1,5 @@
 <?php
-namespace Abstracts;
+
 
 use Illuminate\Database\Seeder;
 
@@ -25,10 +25,10 @@ abstract class AbstractByDataSeeder extends Seeder
      * @param array $items
      * @return void
      */
-    private function registerData($items){
+    protected function registerData($items){
         $counterId=1;
         foreach ($items as $item) {
-            $this->modelClass()::updateOrCreate(['id'=>$counterId,'name'=>$item]);
+            $this->modelClass()::updateOrCreate($this->format($item,$counterId));
             $counterId++;
         }
     }
@@ -42,5 +42,11 @@ abstract class AbstractByDataSeeder extends Seeder
      * @return Class
      */
     protected abstract function modelClass();
+    /**
+     * give your data form
+     *
+     * @return array
+     */
+    protected abstract function format($item,$counterId);
 
 }
