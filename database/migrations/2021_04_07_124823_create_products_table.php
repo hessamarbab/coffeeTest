@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('option_id');
-            $table->string('name')->unique();
+            $table->string('name');//->unique();//TODO unique
             $table->integer('cost');
             $table->timestamps();
             $table->foreign('option_id')
