@@ -1,14 +1,12 @@
 <?php
 
 use App\Role;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
-    protected $items = [
-        ['id'=>1,'type'=>'manager'],
-        ['id'=>2,'type'=>'customer']
-    ];
+
     /**
      * Run the database seeds.
      *
@@ -23,8 +21,11 @@ class RoleSeeder extends Seeder
     }
     private function registerData()
     {
-        foreach ($this->items as $item) {
-            Role::updateOrCreate($item);
+        $counterId=1;
+        foreach (Role::types as $type) {
+            Role::updateOrCreate(['id'=>$counterId,'type'=>$type]);
+            $counterId++;
         }
     }
+
 }

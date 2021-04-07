@@ -11,7 +11,7 @@ class Role extends Model
     protected $fillable = [
         'type'
     ];
-    public $types=[
+    public const  types=[
         'manager','customer'
     ];
     public function users()
