@@ -22,10 +22,10 @@ class OptionSeeder extends AbstractByDataSeeder
      *
      * @return class
      */
-    protected function modelClass()
+ /*   protected function modelClass()
     {
         return Option::class;
-    }
+    }*/
     /**
      *  gave data structure
      *

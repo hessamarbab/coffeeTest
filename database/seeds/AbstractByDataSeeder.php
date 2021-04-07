@@ -5,6 +5,12 @@ use Illuminate\Database\Seeder;
 
 abstract class AbstractByDataSeeder extends Seeder
 {
+
+    public function __construct()
+    {
+        $this->items = $this->items();
+        $this->modelClass = $this->modelClass();
+    }
     /**
      * Run the database seeds.
      *
@@ -14,7 +20,7 @@ abstract class AbstractByDataSeeder extends Seeder
     {
         if(!$this->modelClass()::exists())
         {
-            $items=$this->items();
+            $items=$this->items;
             $this->registerData($items);
         }
     }
@@ -41,7 +47,9 @@ abstract class AbstractByDataSeeder extends Seeder
      *
      * @return Class
      */
-    protected abstract function modelClass();
+    protected function modelClass(){
+        return 'App\\'.str_replace("Seeder", "", get_called_class());
+    }
     /**
      * give your data form
      *
