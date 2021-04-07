@@ -2,15 +2,12 @@
 
 use Illuminate\Database\Seeder;
 
-class ProductSeeder extends Seeder
+class ProductSeeder extends AbstractByFactorySeeder
 {
     /**
-     * Run the database seeds.
+     * number of creating products
      *
-     * @return void
+     * @var integer
      */
-    public function run()
-    {
-        //
-    }
+    protected $number=30;
 }

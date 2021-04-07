@@ -2,14 +2,18 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Option;
 use App\Product;
 use Faker\Generator as Faker;
 
-$factory->define(Product::class, function (Faker $faker) {
+$optionCount = Option::count();
+$factory->define(Product::class, function (Faker $faker) use($optionCount){
 
     $faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($faker));
 
     return [
-        'name'=>$faker->beverageName()
+        'name' => $faker->beverageName(),
+        'cost' => $faker->numberBetween(1,20),
+        'option_id' => $faker->numberBetween(1,$optionCount)
     ];
 });
