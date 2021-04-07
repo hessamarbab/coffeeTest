@@ -1,31 +1,28 @@
 <?php
 
 use App\Role;
+use Abstracts\AbstractByDataSeeder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 
-class RoleSeeder extends Seeder
+class RoleSeeder extends AbstractByDataSeeder
 {
 
     /**
-     * Run the database seeds.
+     * data we need to seed
      *
-     * @return void
+     * @return array
      */
-    public function run()
-    {
-        if(!Role::exists())
-        {
-            $this->registerData();
-        }
+    protected function items(){
+        return $this->modelClass()::types;
     }
-    private function registerData()
+      /**
+     * model class
+     *
+     * @return class
+     */
+    protected function modelClass()
     {
-        $counterId=1;
-        foreach (Role::types as $type) {
-            Role::updateOrCreate(['id'=>$counterId,'type'=>$type]);
-            $counterId++;
-        }
+        return Role::class;
     }
-
 }

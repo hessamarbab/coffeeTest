@@ -1,16 +1,30 @@
 <?php
 
+use Abstracts\AbstractByDataSeeder;
+use App\Option;
 use Illuminate\Database\Seeder;
 
-class OptionSeeder extends Seeder
+class OptionSeeder extends AbstractByDataSeeder
 {
     /**
-     * Run the database seeds.
+     * data we need to seed
      *
-     * @return void
+     * @return array
      */
-    public function run()
+    protected function items(){
+        return [
+            'Size',
+            'Shots',
+            'kind'
+        ];
+    }
+    /**
+     * model class
+     *
+     * @return class
+     */
+    protected function modelClass()
     {
-        
+        return Option::class;
     }
 }
