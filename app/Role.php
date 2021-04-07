@@ -4,12 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-use Stringable;
+
 
 class Role extends Model
 {
     protected $fillable = [
         'type'
+    ];
+    public $types=[
+        'manager','customer'
     ];
     public function users()
     {
