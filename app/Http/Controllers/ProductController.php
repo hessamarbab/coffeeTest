@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResourceCollection;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::with('option')->with('option.choices')->get();// TODO json resource menu
+        return new ProductResourceCollection( Product::with('option.choices')->get());// TODO json resource menu
     }
 
     /**
