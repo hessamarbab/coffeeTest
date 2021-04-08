@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResourceCollection;
 use App\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -11,11 +12,17 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new ProductResourceCollection( Product::with('option.choices')->get());// TODO json resource menu
+        $data= Product::with('option.choices')->paginate(15);
+        $response =new ProductResourceCollection($data);
+        return $request->wantsJson()
+            ?  $response
+            :view("product.index")->withProducts($response);
+
     }
 
     /**
