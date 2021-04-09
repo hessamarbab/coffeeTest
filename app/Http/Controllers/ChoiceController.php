@@ -3,28 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Choice;
+use App\Option;
 use Illuminate\Http\Request;
 
 class ChoiceController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        //TODO admin authrize
+        return view("choice.create_edit")->withOption(
+            Option::findOrFail(
+                $request->option_id
+                )
+        );
     }
 
     /**
@@ -35,7 +31,12 @@ class ChoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //TODO admin authrize
+        $data = $request->only('name','option_id');
+        $choice= Choice::create($data);
+        return $request->wantsJson()
+        ?  $choice
+        :redirect("/api/options");
     }
 
     /**
@@ -57,7 +58,10 @@ class ChoiceController extends Controller
      */
     public function edit(Choice $choice)
     {
-        //
+        //TODO admin authrize
+        return view("choice.create_edit")
+        ->withChoice($choice);
+
     }
 
     /**
@@ -69,7 +73,11 @@ class ChoiceController extends Controller
      */
     public function update(Request $request, Choice $choice)
     {
-        //
+        $data = $request->only('name');
+        $choice->update($data);//TODO add chioces
+        return $request->wantsJson()
+            ?  $choice
+            :redirect("/api/options");
     }
 
     /**
@@ -78,8 +86,11 @@ class ChoiceController extends Controller
      * @param  \App\Choice  $choice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Choice $choice)
+    public function destroy(Choice $choice,Request $request)
     {
-        //
+        $choice->delete();
+        return $request->wantsJson()
+            ?  response(null,204)
+            :redirect("/api/options");//TODO delete chioces
     }
 }
