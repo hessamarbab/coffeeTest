@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OptionResourceCollection;
 use App\Option;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,13 @@ class OptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data= Option::with('choices')->paginate(15);
+        $response =new OptionResourceCollection($data);
+        return $request->wantsJson()
+            ?  $response
+            :view("option.index")->withOptions($response);
     }
 
     /**
@@ -24,7 +29,8 @@ class OptionController extends Controller
      */
     public function create()
     {
-        //
+        //TODO admin authrize
+        return view("option.create_edit");
     }
 
     /**
@@ -35,18 +41,12 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Option  $option
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Option $option)
-    {
-        //
+        //TODO admin authrize
+        $data = $request->only('name');
+        $option= Option::create($data);
+        return $request->wantsJson()
+        ?  $option
+        :redirect("/api/options");
     }
 
     /**
@@ -57,7 +57,10 @@ class OptionController extends Controller
      */
     public function edit(Option $option)
     {
-        //
+        //TODO admin authrize
+        return view("option.create_edit")
+        ->withOption($option);
+
     }
 
     /**
@@ -69,7 +72,11 @@ class OptionController extends Controller
      */
     public function update(Request $request, Option $option)
     {
-        //
+        $data = $request->only('name');
+        $option->update($data);//TODO add chioces
+        return $request->wantsJson()
+            ?  $option
+            :redirect("/api/options");
     }
 
     /**
@@ -78,8 +85,11 @@ class OptionController extends Controller
      * @param  \App\Option  $option
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Option $option)
+    public function destroy(Option $option,Request $request)
     {
-        //
+        $option->delete();
+        return $request->wantsJson()
+            ?  response(null,204)
+            :redirect("/api/options");//TODO delete chioces
     }
 }
