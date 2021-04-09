@@ -18,8 +18,6 @@ Auth::routes(['verify'=>false]);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/products',[
-    'as'=>'products.index',
-    'uses'=>'ProductController@index'
-  //  'middleware'=>'auth:sanctum'
-]);
+Route::resource('products', ProductController::class);
+Route::resource('options', OptionController::class);
+Route::resource('choices', ChoiceController::class);
