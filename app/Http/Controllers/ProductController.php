@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResourceCollection;
+use App\Option;
 use App\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,7 +33,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        //TODO admin authrize
+        $options=Option::all();
+        return view("product.create_edit")->withOptions($options);
     }
 
     /**
@@ -43,19 +46,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //TODO admin authrize
+        $data = $request->only('name','cost','option_id');
+        $product= Product::create($data);
+        return $request->wantsJson()
+        ?  $product
+        :redirect("/api/products");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -63,21 +61,32 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        //TODO admin authrize
+        $product=Product::findOrFail($id);
+
+        $options=Option::all();
+        return view("product.create_edit")
+            ->withOptions($options)
+            ->withProduct($product);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param  integer
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product)
     {
-        //
+        //TODO admin authrize
+        $data = $request->only('name','cost','option_id');
+        $product->update($data);
+        return $request->wantsJson()
+            ?  $product
+            :redirect("/api/products");
     }
 
     /**
@@ -86,8 +95,12 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request,Product $product)
     {
-        //
+        //TODO admin authrize
+        $product->delete();
+        return $request->wantsJson()
+            ?  response(null,204)
+            :redirect("/api/products");
     }
 }
