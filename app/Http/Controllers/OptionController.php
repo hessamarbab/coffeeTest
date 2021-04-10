@@ -29,7 +29,7 @@ class OptionController extends Controller
      */
     public function create()
     {
-        //TODO admin authrize
+        $this->authorize('admin',Option::class);
         return view("option.create_edit");
     }
 
@@ -41,7 +41,7 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Option::class);
         $data = $request->only('name');
         $option= Option::create($data);
         return $request->wantsJson()
@@ -57,7 +57,7 @@ class OptionController extends Controller
      */
     public function edit(Option $option)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Option::class);
         return view("option.create_edit")
         ->withOption($option);
 
@@ -72,6 +72,7 @@ class OptionController extends Controller
      */
     public function update(Request $request, Option $option)
     {
+        $this->authorize('admin',Option::class);
         $data = $request->only('name');
         $option->update($data);//TODO add chioces
         return $request->wantsJson()
@@ -87,6 +88,7 @@ class OptionController extends Controller
      */
     public function destroy(Option $option,Request $request)
     {
+        $this->authorize('admin',Option::class);
         $option->delete();
         return $request->wantsJson()
             ?  response(null,204)

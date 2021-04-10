@@ -33,7 +33,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //TODO admin authrize
+        $this->authorize('admin',Product::class);
         $options=Option::all();
         return view("product.create_edit")->withOptions($options);
     }
@@ -46,7 +46,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Product::class);
         $data = $request->only('name','cost','option_id');
         $product= Product::create($data);
         return $request->wantsJson()
@@ -63,7 +63,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Product::class);
         $product=Product::findOrFail($id);
 
         $options=Option::all();
@@ -81,7 +81,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Product::class);
         $data = $request->only('name','cost','option_id');
         $product->update($data);
         return $request->wantsJson()
@@ -97,7 +97,7 @@ class ProductController extends Controller
      */
     public function destroy(Request $request,Product $product)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Product::class);
         $product->delete();
         return $request->wantsJson()
             ?  response(null,204)

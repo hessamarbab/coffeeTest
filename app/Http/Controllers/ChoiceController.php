@@ -15,12 +15,11 @@ class ChoiceController extends Controller
      */
     public function create(Request $request)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Choice::class);
         return view("choice.create_edit")->withOption(
-            Option::findOrFail(
-                $request->option_id
-                )
-        );
+        Option::findOrFail(
+            $request->option_id
+        ));
     }
 
     /**
@@ -31,7 +30,7 @@ class ChoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Choice::class);
         $data = $request->only('name','option_id');
         $choice= Choice::create($data);
         return $request->wantsJson()
@@ -39,16 +38,7 @@ class ChoiceController extends Controller
         :redirect("/api/options");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Choice  $choice
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Choice $choice)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -58,7 +48,7 @@ class ChoiceController extends Controller
      */
     public function edit(Choice $choice)
     {
-        //TODO admin authrize
+        $this->authorize('admin',Choice::class);
         return view("choice.create_edit")
         ->withChoice($choice);
 
@@ -73,6 +63,7 @@ class ChoiceController extends Controller
      */
     public function update(Request $request, Choice $choice)
     {
+        $this->authorize('admin',Choice::class);
         $data = $request->only('name');
         $choice->update($data);//TODO add chioces
         return $request->wantsJson()
@@ -88,9 +79,10 @@ class ChoiceController extends Controller
      */
     public function destroy(Choice $choice,Request $request)
     {
+        $this->authorize('admin',Choice::class);
         $choice->delete();
         return $request->wantsJson()
             ?  response(null,204)
-            :redirect("/api/options");//TODO delete chioces
+            :redirect("/api/options");
     }
 }
