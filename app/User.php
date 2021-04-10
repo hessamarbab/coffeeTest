@@ -40,6 +40,12 @@ class User extends Authenticatable
     {
         return $this->role->is($type);
     }
+    public function setRole($type)
+    {
+        $role=Role::where('type',$type)->firstOrFail();
+        $this->forceFill(['role_id'=>$role->id]);
+        $this->save();
+    }
     public function role()
     {
         return $this->belongsTo(Role::class);

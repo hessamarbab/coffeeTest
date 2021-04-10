@@ -38,11 +38,7 @@ abstract class AbstractByDataSeeder extends Seeder
             $counterId++;
         }
     }
-    /***
-     * return data you need to seed
-     */
-    protected abstract function items();
-    /**
+      /**
      * Model class you want to seed
      *
      * @return Class
@@ -50,6 +46,12 @@ abstract class AbstractByDataSeeder extends Seeder
     protected function modelClass(){
         return 'App\\'.str_replace("Seeder", "", get_called_class());
     }
+
+    /***
+     * return data you need to seed
+     */
+    protected abstract function items();
+
     /**
      * give your data form
      *
