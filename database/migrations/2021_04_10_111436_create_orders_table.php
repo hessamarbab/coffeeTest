@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('product_id');
             $table->foreignId('choice_id');
             $table->enum('status',['waiting','preparation','ready','delivered'])->default('waiting');
+            $table->integer("number");
             $table->timestamps();
 
             $table->foreign('user_id')

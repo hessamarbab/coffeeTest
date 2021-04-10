@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class Order extends Model
 {
@@ -13,7 +15,8 @@ class Order extends Model
      */
     protected $fillable=[
         'product_id',
-        'choice_id'
+        'choice_id',
+        'number'
     ];
     /**
      * eloquent relation function to user model
@@ -51,7 +54,27 @@ class Order extends Model
     {
         return [
             'product_id'=>'required|integer|exists:products,id',
-            'choice_id'=>'required|integer|exists:choices,id'
+            'choice_id'=>["required","integer","exists:choices,id",
+            ]
         ];
+    }
+    /**
+     * check if order request product and choice is compatible
+     *
+     * @param Request $request
+     * @return bool //or throw exception
+     */
+    public static function checkChoice(Request $request)
+    {
+        Product::with('option.choices')
+            ->findOrFail(
+                $request->product_id,['*'],
+                "invalid product_id"
+            )->option->choices()
+                ->findOrFail(
+                    $request->choice_id,['*'],
+                    "invalid choice_id"
+                );
+        return true;
     }
 }

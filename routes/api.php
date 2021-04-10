@@ -21,3 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('products', ProductController::class);
 Route::resource('options', OptionController::class);
 Route::resource('choices', ChoiceController::class);
+Route::post('orders',[
+    'uses'=>'OrderController@store',
+    'middleware'=>'auth:sanctum'
+]);

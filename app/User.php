@@ -62,8 +62,8 @@ class User extends Authenticatable
      *
      * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function orders(Type $var = null)
+    public function orders()
     {
-        return $this->belongsTo(Order::class)
+        return $this->belongsTo(Order::class);
     }
 }
