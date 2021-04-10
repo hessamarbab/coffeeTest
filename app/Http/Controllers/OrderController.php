@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Order;
-use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -37,34 +38,11 @@ class OrderController extends Controller
     public function store(CreateOrderRequest $request)
     {
         $data=$request->only('product_id','choice_id','number');
-        Order::checkChoice($request);
-
-        $order=Order::create($data);
+        $order=new Order($data);
         $order->forceFill(['user_id'=>$request->user()->id]);
+        $order->checkChoice();
         $order->save();
         return $order;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Order $order)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
-    {
-        //
     }
 
     /**
@@ -74,9 +52,14 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        Gate::authorize('update-destroy-order', $order);
+        $data=$request->only('product_id','choice_id','number');
+        $order->fill($data);
+        $order->checkChoice();
+        $order->save();
+        return $order;
     }
 
     /**
@@ -87,6 +70,9 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        Gate::authorize('update-destroy-order', $order);
+        $order->delete();
+        $order->save();
+        return $order;
     }
 }

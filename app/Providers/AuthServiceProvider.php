@@ -27,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('update-destroy-order', function ($user, $order) {
+            return ($user->id === $order->user_id)&&($order->status=="waiting");
+        });
     }
 }

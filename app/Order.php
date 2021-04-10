@@ -61,18 +61,18 @@ class Order extends Model
     /**
      * check if order request product and choice is compatible
      *
-     * @param Request $request
+     *
      * @return bool //or throw exception
      */
-    public static function checkChoice(Request $request)
+    public function checkChoice()
     {
         Product::with('option.choices')
             ->findOrFail(
-                $request->product_id,['*'],
+                $this->product_id,['*'],
                 "invalid product_id"
             )->option->choices()
                 ->findOrFail(
-                    $request->choice_id,['*'],
+                    $this->choice_id,['*'],
                     "invalid choice_id"
                 );
         return true;
