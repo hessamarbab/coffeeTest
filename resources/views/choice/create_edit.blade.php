@@ -1,5 +1,5 @@
 @extends('layouts.app')
-// TODO create or update
+
 @section('content')
     <div class="container">
         <div class="row">

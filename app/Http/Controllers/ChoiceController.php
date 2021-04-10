@@ -65,7 +65,7 @@ class ChoiceController extends Controller
     {
         $this->authorize('admin',Choice::class);
         $data = $request->only('name');
-        $choice->update($data);//TODO add chioces
+        $choice->update($data);
         return $request->wantsJson()
             ?  $choice
             :redirect("/api/options");

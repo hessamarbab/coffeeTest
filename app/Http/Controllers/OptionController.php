@@ -74,7 +74,7 @@ class OptionController extends Controller
     {
         $this->authorize('admin',Option::class);
         $data = $request->only('name');
-        $option->update($data);//TODO add chioces
+        $option->update($data);
         return $request->wantsJson()
             ?  $option
             :redirect("/api/options");
