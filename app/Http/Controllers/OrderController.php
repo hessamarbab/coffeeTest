@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Resources\OrderResource;
+use App\Http\Resources\OrderResourceCollection;
 use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,8 +23,24 @@ class OrderController extends Controller
         $this->authorize('admin',Order::class);
         //TODO show list
     }
-
-
+    /**
+     * View user's order
+     *
+     *  \Illuminate\Http\Request  $request
+     *  @return \Illuminate\Http\Response
+     */
+    public function showList(Request $request)
+    {
+        return new OrderResourceCollection(
+            Auth::user()->orders()
+            ->with([
+                'user',
+                'product',
+                'product.option',
+                'choice'
+                ])->get()
+        );
+    }
     /**
      * Store a newly created resource in storage.
      *

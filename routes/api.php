@@ -34,3 +34,8 @@ Route::post('orders/{order}',[
     'uses'=>'OrderController@update',
     'middleware'=>'auth:sanctum'
 ]);
+Route::get('orders/list',[
+    'as'=>'orders.list',
+    'uses'=>'OrderController@showList',
+    'middleware'=>'auth:sanctum'
+]);

@@ -57,13 +57,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-           /**
+    /**
      * eloquent relation function to order model
      *
      * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function orders()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Order::class);
     }
 }

@@ -15,6 +15,7 @@ class OptionController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('admin',Option::class);
         $data= Option::with('choices')->paginate(15);
         $response =new OptionResourceCollection($data);
         return $request->wantsJson()
