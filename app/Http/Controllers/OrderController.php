@@ -21,10 +21,17 @@ class OrderController extends Controller
     public function index()
     {
         $this->authorize('admin',Order::class);
-        //TODO show list
+        $orders=Order::with([
+            'user',
+            'product',
+            'product.option',
+            'choice',
+            'user'
+            ])->paginate(30);
+        return view('order.index')->withOrders($orders)->withStatuses(Order::statuses);
     }
     /**
-     * View user's order
+     * Show user's order
      *
      *  \Illuminate\Http\Request  $request
      *  @return \Illuminate\Http\Response
@@ -40,6 +47,12 @@ class OrderController extends Controller
                 'choice'
                 ])->get()
         );
+    }
+    public function changeStatus(Request $request, Order $order)
+    {
+        $this->authorize('admin',Order::class);
+        $order->changeStatus($request->status);
+        return redirect("api/orders");
     }
     /**
      * Store a newly created resource in storage.

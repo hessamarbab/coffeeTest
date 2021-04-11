@@ -8,6 +8,17 @@ use Illuminate\Validation\Rule;
 
 class Order extends Model
 {
+     /**
+     * The Order situations that is an enum for status attribute.
+     *
+     * @var array
+     */
+    public const statuses=[
+        'waiting',
+        'preparation',
+        'ready',
+        'delivered'
+    ];
     /**
      * The attributes that are mass assignable.
      *
@@ -76,5 +87,10 @@ class Order extends Model
                     "invalid choice_id"
                 );
         return true;
+    }
+    public function changeStatus($status)
+    {
+        $this->forceFill(["status"=>$status]);
+        $this->save();
     }
 }

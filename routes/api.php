@@ -24,18 +24,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('products', 'ProductController',['except' => ['show']]);
 Route::resource('options', 'OptionController',['except' => ['show']]);
 Route::resource('choices', 'ChoiceController',['except' => ['show','index']]);
-Route::post('orders',[
-    'as'=>'orders.store',
-    'uses'=>'OrderController@store',
-    'middleware'=>'auth:sanctum'
-]);
-Route::post('orders/{order}',[
-    'as'=>'orders.update',
-    'uses'=>'OrderController@update',
-    'middleware'=>'auth:sanctum'
-]);
+Route::resource('orders', 'OrderController',['except' => ['show']]);
 Route::get('orders/list',[
     'as'=>'orders.list',
     'uses'=>'OrderController@showList',
+    'middleware'=>'auth:sanctum'
+]);
+Route::post('orders/{order}/status',[
+    'as'=>'orders.change_status',
+    'uses'=>'OrderController@changeStatus',
     'middleware'=>'auth:sanctum'
 ]);

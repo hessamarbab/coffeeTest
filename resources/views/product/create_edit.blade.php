@@ -40,9 +40,13 @@
                                             option :
                                         </div>
                                         <div  style="padding:20px" class="row ">
-                                            <select name="option_id" id="option_id" value="{{!empty($product)? $product->option->name:null}}">
+                                            <select name="option_id" id="option_id" >
                                                 @foreach ($options as $option)
-                                                    <option value="{{ $option->id}}">{{ $option->name}}</option>
+                                                    <option value="{{ $option->id}}"
+                                                        @if($product->option->name==$option->name)
+                                                            selected="selected"
+                                                         @endif
+                                                        >{{ $option->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

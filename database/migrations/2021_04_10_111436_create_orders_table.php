@@ -1,5 +1,6 @@
 <?php
 
+use App\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->nullable();
             $table->foreignId('product_id');
             $table->foreignId('choice_id');
-            $table->enum('status',['waiting','preparation','ready','delivered'])->default('waiting');
+            $table->enum('status',Order::statuses)->default('waiting');
             $table->integer("number");
             $table->timestamps();
 

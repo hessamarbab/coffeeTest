@@ -26,6 +26,10 @@
                              <a href="{{route('options.index')}}"> Options</a>
                             <hr>
                             </span>
+                            <span>
+                             <a href="{{route('orders.index')}}"> Orders</a>
+                            <hr>
+                            </span>
                         </div>
                     </div>
                 </div>
