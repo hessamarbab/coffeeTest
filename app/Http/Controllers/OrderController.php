@@ -48,6 +48,13 @@ class OrderController extends Controller
                 ])->get()
         );
     }
+    /**
+     * change status by manager
+     *
+     * @param Request $request
+     * @param Order $order
+     * @return redirect
+     */
     public function changeStatus(Request $request, Order $order)
     {
         $this->authorize('admin',Order::class);
