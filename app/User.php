@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Jobs\EmailNotifyJob;
+use App\Notifications\NoticeStatusChange;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -65,5 +67,9 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+    public function sendOrderStatusChangeNotification($order){
+        $this->notify(new NoticeStatusChange($order));
+        // EmailNotifyJob::dispatch(new NoticeStatusChange($order),$this);
     }
 }

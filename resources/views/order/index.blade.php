@@ -4,7 +4,6 @@
     <div class="container">
 
         <div class="row">
-
                 <div class="panel panel-default">
                     <div class="panel-heading" >Orders</div>
                     <div class="panel-body">
@@ -16,7 +15,7 @@
                                         user: {{ $order->user->name }} =>
                                          {{$order->product->name}}>
                                          {{$order->product->option->name}}:
-                                         {{$order->choice->name}}><br/>
+                                         {{$order->choice->name}}<br/>
                                          cost: {{$order->product->cost}}
                                         </a>
                                     </span>

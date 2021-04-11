@@ -92,5 +92,6 @@ class Order extends Model
     {
         $this->forceFill(["status"=>$status]);
         $this->save();
+        $this->user->sendOrderStatusChangeNotification($this);
     }
 }
